@@ -8,20 +8,26 @@
 </head>
 <body>
     <h1>Inventory Management System</h1>
-    
-    <form action="/add" method="POST">
+    <a href="{{ url_for('logout') }}">Logout</a>
+
+    <form id="add-form">
         <input type="text" name="name" placeholder="Product Name" required>
-        <input type="number" name="quantity" placeholder="Quantity" required>
+        <input type="number" id="quantity" placeholder="Quantity" required>
         <button type="submit">Add Item</button>
     </form>
 
     <h2>Inventory List</h2>
-    <ul>
+    <ul id="inventory-list">
         {% for item in items %}
-            <li>{{ item[1] }} - {{ item[2] }} 
-                <a href="/delete/{{ item[0] }}">Delete</a>
-            </li>
+        <li id="item-{{ item[0] }}">
+            {{ item[1] }} - <span class="quantity">{{ item[2] }}</span> 
+            <input type="number" class="edit-quantity" data-id="{{ item[0] }}" value="{{ item[2] }}">
+            <button class="update-btn" data-id="{{ item[0] }}">Update</button>
+            <button class="delete-btn" data-id="{{ item[0] }}">Delete</button>
+        </li>
         {% endfor %}
     </ul>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
