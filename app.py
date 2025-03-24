@@ -24,4 +24,27 @@ def index():
     c.execute("SELECT * FROM inventory")
     items = c.fetchall()
     conn.close()
-    return render_template('index.html', rows=rows)
+    return render_template('index.html', items=items)
+
+@app.route('/add', methods=['POST'])
+def add_item():
+    name = request.form['name']
+    quantity = request.form['quantity']
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute("INSERT INTO inventory (name, quantity) VALUES (?,?)", (name, quantity))
+    conn.commit()
+    conn.close()
+    return redirect('/')
+
+@app.route('/delete/<int:item_id>')
+def delete_item(item_id):
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute("DELETE FROM inventory WHERE id=?", (item_id,))
+    conn.commit()
+    conn.close()
+    return redirect('/')
+
+if __name__=="__main__":
+    app.run(debug=True)
