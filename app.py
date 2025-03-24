@@ -27,7 +27,7 @@ def init_db():
 
 init_db()
 
-# User class
+# User class for flask-Login
 class User(UserMixin):
     def __init__(self, id):
         self.id = id
@@ -37,6 +37,7 @@ def load_user(user_id):
     return User(user_id)
 
 
+# Home Page (Requires Login)
 @app.route('/')
 def index():
     conn = sqlite3.connect('database.db')
@@ -46,17 +47,32 @@ def index():
     conn.close()
     return render_template('index.html', items=items)
 
+# Add Item (AJAX)
 @app.route('/add', methods=['POST'])
+@login_required
+# def add_item():
+#     name = request.form['name']
+#     quantity = request.form['quantity']
+#     conn = sqlite3.connect('database.db')
+#     c = conn.cursor()
+#     c.execute("INSERT INTO inventory (name, quantity) VALUES (?,?)", (name, quantity))
+#     conn.commit()
+#     conn.close()
+#     return jsonify({"name": name, "quantity": quantity})
+
+# new AJAX add item code
 def add_item():
-    name = request.form['name']
-    quantity = request.form['quantity']
+    data = request.get_json()
+    name = data.get("name")
+    quantity = data.get("quantity")
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
     c.execute("INSERT INTO inventory (name, quantity) VALUES (?,?)", (name, quantity))
     conn.commit()
     conn.close()
-    return jsonify({"name": name, "quantity": quantity})
+    return jsonify({"status": "success", "name": name, "quantity": quantity})
 
+# Delete Item (AJAX)
 @app.route('/delete/<int:item_id>', methods=["POST"])
 @login_required
 def delete_item(item_id):
@@ -67,11 +83,22 @@ def delete_item(item_id):
     conn.close()
     return jsonify({"status": "success", "item_id": item_id})
 
-@app.route('/update/<int:item_id>', methods=['POST'])
+# Update Item (AJAX) (Note: this is not working as expected, it's probably a problem with the way we're getting the data)
+@app.route('/update', methods=['POST'])
 @login_required
 def update_item(item_id):
-    item_id = request.form["id"]
-    quantity = request.form["quantity"]
+    # item_id = request.form["id"]
+    # quantity = request.form["quantity"]
+    # conn = sqlite3.connect('database.db')
+    # c = conn.cursor()
+    # c.execute("UPDATE inventory SET quantity=? WHERE id=?", (quantity, item_id))
+    # conn.commit()
+    # conn.close()
+    
+    # return jsonify({"status": "success", "item_id": item_id, "quantity": quantity})
+
+    data = request.get_json()
+    item_id = data.get("id")
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
     c.execute("UPDATE inventory SET quantity=? WHERE id=?", (quantity, item_id))

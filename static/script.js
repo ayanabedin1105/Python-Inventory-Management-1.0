@@ -5,9 +5,13 @@ document.getElementById("add-form").addEventListener("submit", function(event) {
     let quantity = document.getElementById("quantity").value;
 
     fetch("/add", {
+        // method: "POST",
+        // body: new URLSearchParams({ name: name, quantity: quantity }),
+        // headers: { "Content-Type": "application/x-www-form-urlencoded" }
+
         method: "POST",
-        body: new URLSearchParams({ name: name, quantity: quantity }),
-        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        body: JSON.stringify({ name: name, quantity: quantity }),
+        headers: { "Content-Type": "application/json" }
     })
     .then(response => response.json())
     .then(data => {
