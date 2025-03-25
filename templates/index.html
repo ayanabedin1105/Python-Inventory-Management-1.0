@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory Management-1.0</title>
+    <title>Inventory Management</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <a href="{{ url_for('logout') }}">Logout</a>
 
     <form id="add-form">
-        <input type="text" name="name" placeholder="Product Name" required>
+        <input type="text" id="name" placeholder="Product Name" required>
         <input type="number" id="quantity" placeholder="Quantity" required>
         <button type="submit">Add Item</button>
     </form>
@@ -19,15 +19,15 @@
     <h2>Inventory List</h2>
     <ul id="inventory-list">
         {% for item in items %}
-        <li id="item-{{ item[0] }}">
-            {{ item[1] }} - <span class="quantity">{{ item[2] }}</span> 
-            <input type="number" class="edit-quantity" data-id="{{ item[0] }}" value="{{ item[2] }}">
-            <button class="update-btn" data-id="{{ item[0] }}">Update</button>
-            <button class="delete-btn" data-id="{{ item[0] }}">Delete</button>
-        </li>
+            <li id="item-{{ item[0] }}">
+                {{ item[1] }} - <span class="quantity">{{ item[2] }}</span> 
+                <input type="number" class="edit-quantity" data-id="{{ item[0] }}" value="{{ item[2] }}">
+                <button class="update-btn" data-id="{{ item[0] }}">Update</button>
+                <button class="delete-btn" data-id="{{ item[0] }}">Delete</button>
+            </li>
         {% endfor %}
     </ul>
-    
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
