@@ -17,16 +17,17 @@
     </form>
 
     <h2>Inventory List</h2>
-    <ul id="inventory-list">
+    <div class="inventory-container">
         {% for item in items %}
-            <li id="item-{{ item[0] }}">
-                {{ item[1] }} - <span class="quantity">{{ item[2] }}</span> 
-                <input type="number" class="edit-quantity" data-id="{{ item[0] }}" value="{{ item[2] }}">
-                <button class="update-btn" data-id="{{ item[0] }}">Update</button>
-                <button class="delete-btn" data-id="{{ item[0] }}">Delete</button>
-            </li>
+        <div class="card" id="item-{{ item[0] }}">
+            <h3>{{ item[1] }}</h3>
+            <p>Quantity: <span class="quantity">{{ item[2] }}</span></p>
+            <input type="number" class="edit-quantity" data-id="{{ item[0] }}" value="{{ item[2] }}">
+            <button class="update-btn" data-id="{{ item[0] }}">Update</button>
+            <button class="delete-btn" data-id="{{ item[0] }}" style="background: #ff4d4d;">Delete</button>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
