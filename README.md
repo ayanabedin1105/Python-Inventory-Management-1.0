@@ -11,7 +11,7 @@ This is a simple Inventory Management System built using Flask and SQLite. It al
 ## Installation and Setup
 
 1. **Clone the repository**  
-- `git clone https://github.com/your-username/inventory-management.git cd inventory-management`
+- `git clone https://github.com/ayanabedin1105/Python-Inventory-Management-1.0.git`
 2. **Install dependencies**
 - `pip install flask flask-bcrypt flask-login`
 3. **Run the application**
@@ -31,5 +31,7 @@ Then open `http://127.0.0.1:5000/` in your browser.
 - Add user registration
 - Improve UI design
 - Implement search and filtering
+
+The screenshots have been uploaded to the repository
 
 Let me know if you need any updates! 🚀
